@@ -158,9 +158,9 @@ export class GenerateTypeProvider implements CodeActionProvider {
 
     if (!generateTypeInfos.length) return [];
 
-    const action = new CodeAction('Generate explicit type', CodeActionKind.QuickFix);
+    const action = new CodeAction('Insert Inferred Type', CodeActionKind.QuickFix);
     const args: Parameters<typeof commandHandler> = [generateTypeInfos];
-    action.command = { command: 'extension.generateExplicitType', title: 'Generate explicit type', arguments: args };
+    action.command = { command: 'extension.insertInferredType', title: 'Insert Inferred Type', arguments: args };
     action.isPreferred = isPreferrable;
 
     return [action];

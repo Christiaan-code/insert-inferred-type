@@ -1,16 +1,17 @@
 {
-  "name": "typescript-explicit-types",
-  "displayName": "TypeScript Explicit Types",
-  "description": "Generate explicit type annotation from inferred type in TypeScript",
+  "name": "insert-inferred-type",
+  "displayName": "Insert Inferred Type",
+  "description": "Inserts the inferred type of a untyped variable in typescript files. This extension is just a modified version of the 'typescript-explicit-types' extension by nick-lvov-dev.",
   "version": "0.0.10",
   "icon": "logo.png",
-  "publisher": "nick-lvov-dev",
-  "repository": "https://github.com/nick-lvov-dev/typescript-explicit-types",
+  "publisher": "christiaan-du-preez",
+  "repository": "https://github.com/Christiaan-code/insert-inferred-type",
   "engines": {
     "vscode": "^1.34.0"
   },
   "categories": [
-    "Programming Languages"
+    "Programming Languages",
+    "Linters"
   ],
   "activationEvents": [
     "onLanguage:typescript",
@@ -20,22 +21,30 @@
   "contributes": {
     "commands": [
       {
-        "command": "extension.generateExplicitType",
-        "title": "Generate explicit type"
+        "command": "extension.insertInferredType",
+        "title": "Insert Inferred Type"
+      }
+    ],
+    "keybindings": [
+      {
+        "command": "extension.insertInferredType",
+        "key": "cmd+shift+ctrl+t",
+        "mac": "cmd+shift+ctrl+t",
+        "when": "editorTextFocus && editorLangId == 'typescript'"
       }
     ],
     "configuration": {
-      "title": "TypeScript Explicit Types",
+      "title": "Insert Inferred Type",
       "properties": {
-        "typescriptExplicitTypes.preferable": {
+        "insertInferredType.preferable": {
           "type": "boolean",
           "default": true,
-          "description": "Mark type generation actions as preferable."
+          "description": "Mark type insertion actions as preferable."
         },
-        "typescriptExplicitTypes.formatAfterGeneration": {
+        "insertInferredType.formatAfterInsertion": {
           "type": "boolean",
           "default": true,
-          "description": "Run document format action after a type has been generated."
+          "description": "Run document format action after a type has been inserted."
         }
       }
     }

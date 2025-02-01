@@ -43,7 +43,7 @@ const generateType = async (
   }
 };
 
-export const commandId = 'extension.generateExplicitType';
+export const commandId = 'extension.insertInferredType';
 export const commandHandler = async (generateTypeInfos?: GenerateTypeInfo[], autoImport = false) => {
   const editor = window.activeTextEditor;
   if (!editor) return;
