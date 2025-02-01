@@ -49,7 +49,7 @@ function executeSymbolProvider(uri: Uri) {
 // since type extraction depends on whether the definition is a function or not, there are some exceptions
 const functionHandlerExceptions = ['get'];
 
-export class GenereateTypeProvider implements CodeActionProvider {
+export class GenerateTypeProvider implements CodeActionProvider {
   public static readonly fixAllCodeActionKind = CodeActionKind.SourceFixAll.append('tslint');
 
   public static metadata: CodeActionProviderMetadata = {

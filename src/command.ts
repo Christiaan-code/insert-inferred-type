@@ -1,5 +1,6 @@
-import { commands, Position, Range, TextEdit, TextEditor, Uri, window, workspace, WorkspaceEdit } from 'vscode';
+import { commands, Position, Range, TextEdit, TextEditor, Uri, window, workspace, WorkspaceEdit, CodeActionContext } from 'vscode';
 import { findMatchIndexes } from './helpers/findMatches';
+import { GenerateTypeProvider } from './actionProvider';
 
 export interface GenerateTypeInfo {
   typescriptHoverResult: string;
@@ -43,9 +44,22 @@ const generateType = async (
 };
 
 export const commandId = 'extension.generateExplicitType';
-export const commandHandler = async (generateTypeInfos: GenerateTypeInfo[], autoImport = false) => {
+export const commandHandler = async (generateTypeInfos?: GenerateTypeInfo[], autoImport = false) => {
   const editor = window.activeTextEditor;
-  if (!editor) {
+  if (!editor) return;
+
+  if (!generateTypeInfos || generateTypeInfos.length === 0) {
+    const provider = new GenerateTypeProvider();
+    const codeActions = await provider.provideCodeActions(editor.document, editor.selection, {} as CodeActionContext);
+    if (!codeActions || codeActions.length === 0) {
+      window.showErrorMessage('No types could be generated for the current selection');
+      return;
+    }
+    generateTypeInfos = codeActions[0].command?.arguments?.[0];
+  }
+
+  if (!generateTypeInfos || generateTypeInfos.length === 0) {
+    window.showErrorMessage('No types could be generated for the current selection');
     return;
   }
 
